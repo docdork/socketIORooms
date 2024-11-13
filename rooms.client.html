@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Socket.IO Client</title>
   </head>
   <body>
     <h1 id="title">
@@ -15,8 +15,23 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
-        //codehere
-        
+      //codehere
+      const welcome = document.getElementById("welcome");
+      const n = document.getElementById("n");
+
+      const manager = new io.Manager("http://localhost:1337", {
+        path: "/socket.io",
+      });
+
+      const socket = manager.socket("/");
+
+      socket.on("welcome", (msg) => {
+        welcome.textContent = msg;
+      });
+
+      socket.on("updateClientCount", (clientsCount) => {
+        n.textContent = clientsCount;
+      });
     </script>
   </body>
 </html>
