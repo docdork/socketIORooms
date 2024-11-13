@@ -2,6 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const io = require("socket.io")();
+
 const app = http.createServer((req, res) => {
   if (req.url === "/") {
     fs.readFile(path.resolve(__dirname, "rooms-client.html"), (err, data) => {
@@ -25,7 +26,7 @@ const root = io.of("/");
 const notifyClients = () => {
   root.clients((error, clients) => {
     if (error) throw error;
-    root.to("comonRoom").emit("updateClientCount", clients.length);
+    root.to("commonRoom").emit("updateClientCount", clients.length);
   });
 };
 
